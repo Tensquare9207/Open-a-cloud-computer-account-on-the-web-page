@@ -1,5 +1,5 @@
 # 蓝天新世界 X 蓝天雾云 开发的网页开户
-主要是，Bili bili快手和其他平台上都没有这个玩意，导致一些新手找起来比较麻烦，开发了本项目，鉴于其他的UI比较难看吧，我们就自己研发了一个，不过完全可以根据自己喜好改，非常稳定好吧，堪比老狗（本源码完全免费，并且以后会更新更多的功能，如果说有人付费的话，请骂他祖宗18代<img style=" width: auto;height: 1em;  vertical-align: middle; margin-top: -2px;" src="./1img/emoji/021429B67AACA23F9713D89662DF3D00.png">）
+主要是，Bili bili快手和其他平台上都没有这个玩意，导致一些新手找起来比较麻烦，开发了本项目，鉴于其他的UI比较难看吧，我们就自己研发了一个，不过完全可以根据自己喜好改，非常稳定好吧，堪比老狗（本源码完全免费，并且以后会更新更多的功能，如果说有人付费的话，请骂他祖宗18代<img style=" width: auto;height: 1em;  vertical-align: middle; margin-top: -2px;" src="https://ltyun.top/1img/emoji/021429B67AACA23F9713D89662DF3D00.png">）
 ## 快速上手
 ### 1.我们需要一个WINDOWS服务器（或者挂机宝也行）然后去这个地方下载面板[小皮面板](https://old.xp.cn)
 ### 2.如果需要其他的运行库的话，其实可以安装的，但是一般情况下，不太建议安装，因为的话，他会占用你一定的空间<img style=" width: auto;height: 1em;  vertical-align: middle; margin-top: -2px;" src="./1img/emoji/021429B67AACA23F9713D89662DF3D00.png">）
