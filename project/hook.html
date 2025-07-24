@@ -1,0 +1,57 @@
+<form id="userForm">
+<label for="username" class="yh">用户名:</label>
+<input type="text" id="username" name="username" required class="form-control">
+<label for="password" class="mm">密码:</label>
+<input type="password" id="password" name="password" required class="form-control">
+<label for="email" class="yx">邮箱:</label>
+<input type="email" id="email" name="email" required class="form-control yx">
+<label for="QQ" class="QQ">QQ:</label>
+<input type="number" id="QQ" name="QQ" required class="form-control QQ">
+<button type="submit" class="btn btn-info">创建用户<i class="fa fa-check-square"></i></button>
+</form>
+<script src="./api/hook.js"></script>
+<!--<script>
+    document.getElementById('userForm').addEventListener('submit', function(event) {
+        event.preventDefault();
+        
+        const username = document.getElementById('username').value;
+        const password = document.getElementById('password').value;
+        const email = document.getElementById('email').value;
+        const QQ = document.getElementById('QQ').value;
+        
+        fetch('http://hb.frp.one:64743/hook.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: new URLSearchParams({
+                'username': username,
+                'password': password,
+                'email': email,
+                'QQ': QQ
+            })
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+        .then(data => {
+            if (data.success) {
+                showbox('操作成功', '' + data, '确定', null, 'success', '请点击关闭按钮！', '', function() {
+                console.log('操作成功确认');
+            });
+            } else {
+                showbox('发生了一点错误~', '' + data.message, '确定', null, 'success', '请点击关闭按钮！', '', function() {
+                console.log('操作成功确认');
+            });
+            }
+        })
+        .catch(error => {
+            console.error('Fetch error:', error);
+            alert('发生错误' + error)
+        });
+    });
+</script>
+-->
