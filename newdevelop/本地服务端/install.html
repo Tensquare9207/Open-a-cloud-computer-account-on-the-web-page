@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>系统安装向导</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Bootstrap v5 栅格 -->
+    <link href="https://fastly.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Element-Plus -->
+    <link rel="stylesheet" href="https://unpkg.com/element-plus/dist/index.css"/>
+    <style>
+        .el-steps{ width: 100%; }
+    </style>
+</head>
+<body>
+<!-- 新增：最外层挂载节点 -->
+<div id="app">
+    <div class="container py-5">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <el-card>
+                    <template #header>
+                        <h3 class="text-center">系统安装向导</h3>
+                    </template>
+
+                    <!-- 步骤条 -->
+                    <!-- <el-steps :active="step" finish-status="success" class="mb-4">
+                        <el-step title="许可协议"/>
+                        <el-step title="环境配置"/>
+                        <el-step title="安装完成"/>
+                    </el-steps> -->
+
+                    <!-- 步骤1：协议 -->
+                    <div v-show="step===0">
+                        <h5 class="mb-3">用户许可协议</h5>
+                        <div class="border p-3" style="height:200px; overflow-y:auto;">
+                            请务必阅读并同意本协议的全部条款……（略）
+                        </div>
+                        <div class="text-end mt-3">
+                            <el-checkbox v-model="agree">我已阅读并同意该协议</el-checkbox>
+                            <el-button type="primary" class="ms-2" :disabled="!agree" @click="step++">下一步</el-button>
+                        </div>
+                    </div>
+
+                    <!-- 步骤2：配置 -->
+                    <div v-show="step===1">
+                        <el-form ref="formRef" :model="form" :rules="rules" label-width="120px">
+                            <h6 class="mb-3">数据库配置（将写入 /lt/config.php）</h6>
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <el-form-item label="服务器" prop="host">
+                                        <el-input v-model="form.host" placeholder="localhost"/>
+                                    </el-form-item>
+                                </div>
+                                <div class="col-md-6">
+                                    <el-form-item label="端口" prop="port">
+                                        <el-input v-model.number="form.port" placeholder="3306"/>
+                                    </el-form-item>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <el-form-item label="用户名" prop="user">
+                                        <el-input v-model="form.user"/>
+                                    </el-form-item>
+                                </div>
+                                <div class="col-md-6">
+                                    <el-form-item label="密码" prop="pwd">
+                                        <el-input v-model="form.pwd" show-password/>
+                                    </el-form-item>
+                                </div>
+                            </div>
+
+                            <el-form-item label="数据库名" prop="dbname">
+                                <el-input v-model="form.dbname"/>
+                            </el-form-item>
+
+                            <h6 class="mt-4 mb-3">管理员账号</h6>
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <el-form-item label="用户名" prop="adminUser">
+                                        <el-input v-model="form.adminUser"/>
+                                    </el-form-item>
+                                </div>
+                                <div class="col-md-6">
+                                    <el-form-item label="密码" prop="adminPwd">
+                                        <el-input v-model="form.adminPwd" show-password/>
+                                    </el-form-item>
+                                </div>
+                            </div>
+
+                            <el-form-item label="QQ号" prop="qq">
+                                <el-input v-model="form.qq"/>
+                            </el-form-item>
+
+                            <div class="text-end">
+                                <el-button @click="step--">上一步</el-button>
+                                <el-button type="primary" :loading="installing" @click="submit">立即安装</el-button>
+                            </div>
+                        </el-form>
+                    </div>
+
+                    <!-- 步骤3：完成 -->
+                    <div v-show="step===2" class="text-center">
+                        <el-result icon="success" title="安装完成" sub-title="您可以开始使用系统了">
+                            <template #extra>
+                                <a href="/" class="btn btn-primary">进入首页</a>
+                            </template>
+                        </el-result>
+                    </div>
+
+                </el-card>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Vue 3 & Element -->
+<script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
+<script src="https://unpkg.com/element-plus/dist/index.full.min.js"></script>
+<script src="https://fastly.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script>
+const { createApp, ref, reactive } = Vue;
+const { ElMessage } = ElementPlus;
+
+createApp({
+  setup(){
+    const step = ref(0);
+    const agree = ref(false);
+    const installing = ref(false);
+    const formRef = ref(null);
+
+    const form = reactive({
+      host:'localhost',
+      port:3306,
+      user:'',
+      pwd:'',
+      dbname:'',
+      adminUser:'admin',
+      adminPwd:'',
+      qq:''
+    });
+
+    const rules = {
+      host:[{required:true,message:'请输入数据库服务器',trigger:'blur'}],
+      port:[{required:true,type:'number',message:'请输入端口',trigger:'blur'}],
+      user:[{required:true,message:'请输入用户名',trigger:'blur'}],
+      dbname:[{required:true,message:'请输入数据库名',trigger:'blur'}],
+      adminUser:[{required:true,message:'请输入管理员用户名',trigger:'blur'}],
+      adminPwd:[{required:true,min:6,message:'密码至少6位',trigger:'blur'}],
+      qq:[{required:true,pattern:/^\d{5,}$/,message:'请输入正确的QQ号',trigger:'blur'}]
+    };
+
+    function submit(){
+      formRef.value.validate(valid=>{
+        if(!valid) return;
+        installing.value = true;
+        axios.post('/php/install.php',form).then(res=>{
+          if(res.data.code===0){
+            step.value = 2;
+          }else{
+            ElMessage.error(res.data.msg||'安装失败');
+          }
+        }).catch(e=>{
+          ElMessage.error(e.response?.data?.msg || '网络错误');
+        }).finally(()=> installing.value=false);
+      });
+    }
+
+    return { step, agree, form, rules, formRef, installing, submit };
+  }
+}).use(ElementPlus).mount('#app');   // ← 关键修复：挂载到 #app
+</script>
+</body>
+</html>
