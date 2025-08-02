@@ -25,15 +25,22 @@ graph TD
 ## 快速上手!(本地服务器)
 也算是你主网站服务器！
 ### 部署项目
-[查看视频教程(推荐！)](https://www.bilibili.com/video/BV1qbbZzSEQ2/)
-[下载源码通过123网盘](https://www.123684.com/s/uE2yjv-KGKgh)
+[查看视频教程(推荐！)](https://space.bilibili.com/1318054047)
+[下载运行库通过123网盘](https://www.123684.com/s/uE2yjv-KGKgh)
 [获取许可证](https://ltfxb.top/console/?gm)
+[获取解密插件](https://www.123684.com/s/uE2yjv-VWKgh)
+
 ### 环境部署
-必须是 PHP 7.4 ! 必须安装 ioncube 拓展！
+必须是 PHP 7.4 ! 必须安装 source guardian与senc15 拓展！
 伪静态： 
 location / {
     try_files $uri $uri/ /index.html;
 }
+访问 将加载器安装到 /www/server/php/74/lib/php/extensions/no-debug-non-zts-[这里可能不一样]
+
+编辑 /www/server/php/74/etc/php.ini 并添加“extension=ixed.7.4.lin”指令
+
+重启php
 ### 安装项目
 上传项目 访问  （你的域名）/install.html 路径
 然后 安装完成 直接点击登录就可以了 
@@ -42,6 +49,7 @@ location / {
 #### 1.无法使用管理员密码功能
 #### 2.无法使用用户管理
 #### 3.无法使用支付功能
+#### 3.无法使用兑换码
 ## 快速上手！(远程服务器)
 这里需要放入你的共享云电脑！
 ### 环境部署
