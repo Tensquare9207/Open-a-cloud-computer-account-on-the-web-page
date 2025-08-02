@@ -29,9 +29,10 @@ graph TD
 [下载运行库通过123网盘](https://www.123684.com/s/uE2yjv-KGKgh)
 [获取许可证](https://ltfxb.top/console/?gm)
 [获取解密插件](https://www.123684.com/s/uE2yjv-VWKgh)
-
+交流群 1036858989
 ### 环境部署
-必须是 PHP 7.4 ! 必须安装 source guardian与senc15 拓展！
+必须是 PHP 7.4 ! 必须安装 source guardian拓展！
+然后把 senc15.lic 放在网站根目录！
 伪静态： 
 location / {
     try_files $uri $uri/ /index.html;
